@@ -7,20 +7,20 @@ import { getUser } from "store/userSlice";
 
 const Navigation: React.FC = () => {
   const dispatch = useAppDispatch();
-  // const user = useAppSelector((state) => state.user);
-  // const token = useAppSelector((state) => state.auth.accessToken);
+  const user = useAppSelector((state) => state.user);
+  const token = useAppSelector((state) => state.auth.accessToken);
 
-  // useEffect(() => {
-  //   if (!user.user) {
-  //     dispatch(getUser());
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!user.user) {
+      dispatch(getUser());
+    }
+  }, []);
 
   return (
     <NavigationContainer>
-      {/* {!token ? <AuthStackNavigator /> : <AppStackNavigator />} */}
+      {!token ? <AuthStackNavigator /> : <AppStackNavigator />}
       {/* <AuthStackNavigator /> */}
-      <AppStackNavigator />
+      {/* <AppStackNavigator /> */}
     </NavigationContainer>
   );
 };
