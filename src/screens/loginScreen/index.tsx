@@ -3,6 +3,7 @@ import { Button } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Box, Text } from "utils/theme";
 import { AuthStackParamList } from "navigation/types";
+import SafeAreaWrapper from "components/general/SafeAreaWrapper";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
@@ -17,10 +18,12 @@ const LoginScreen: React.FC = () => {
   };
 
   return (
-    <Box>
-      <Text variant="textBase">LoginScreen</Text>
-      <Button title="to signup" onPress={navigateToSignup} />
-    </Box>
+    <SafeAreaWrapper>
+      <Box>
+        <Text variant="textBase">LoginScreen</Text>
+        <Button title="to signup" onPress={navigateToSignup} />
+      </Box>
+    </SafeAreaWrapper>
   );
 };
 

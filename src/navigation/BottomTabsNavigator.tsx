@@ -5,7 +5,7 @@ import HomeStackNavigator from "./HomeStackNavigator";
 import CompletedScreen from "screens/completedScreen";
 import TodayScreen from "screens/todayScreen";
 import CategoriesStackNavigator from "./CategoriesStackNavigator";
-import Icons from "components/svg/icons";
+import Icons from "components/general/icons";
 import { useTheme } from "@shopify/restyle";
 
 const Tabs = createBottomTabNavigator<RootBottomTabParamList>();

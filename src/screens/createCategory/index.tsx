@@ -4,6 +4,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button } from "react-native";
 import { Box, Text } from "utils/theme";
 import { CategoriesStackParamList } from "navigation/types";
+import SafeAreaWrapper from "components/general/SafeAreaWrapper";
 
 type CreateCategotyScreenNavigationProp = NativeStackNavigationProp<
   CategoriesStackParamList,
@@ -18,10 +19,12 @@ const CreateCategotyScreen: React.FC = () => {
   //   };
 
   return (
-    <Box>
-      <Text variant="textBase">CreateCategotyScreen</Text>
-      {/* <Button title="to home" onPress={navigateToHome} /> */}
-    </Box>
+    <SafeAreaWrapper>
+      <Box>
+        <Text variant="textBase">CreateCategotyScreen</Text>
+        {/* <Button title="to home" onPress={navigateToHome} /> */}
+      </Box>
+    </SafeAreaWrapper>
   );
 };
 

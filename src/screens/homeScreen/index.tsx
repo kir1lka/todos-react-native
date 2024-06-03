@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button } from "react-native";
 import { Box, Text } from "utils/theme";
 import { HomeStackParamList } from "navigation/types";
-import SafeAreaWrapper from "components/safeAreaWrapper/SafeAreaWrapper";
+import SafeAreaWrapper from "components/general/SafeAreaWrapper";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   HomeStackParamList,

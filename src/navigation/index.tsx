@@ -1,13 +1,24 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { Box, Text } from "utils/theme";
 import AuthStackNavigator from "./AuthStackNavigator";
 import AppStackNavigator from "./AppStackNavigator";
+import { useAppDispatch, useAppSelector } from "components/general/Hooks";
+import { useEffect } from "react";
+import { getUser } from "store/userSlice";
 
 const Navigation: React.FC = () => {
-  const user = true;
+  const dispatch = useAppDispatch();
+  // const user = useAppSelector((state) => state.user);
+  // const token = useAppSelector((state) => state.auth.accessToken);
+
+  // useEffect(() => {
+  //   if (!user.user) {
+  //     dispatch(getUser());
+  //   }
+  // }, []);
 
   return (
     <NavigationContainer>
+      {/* {!token ? <AuthStackNavigator /> : <AppStackNavigator />} */}
       {/* <AuthStackNavigator /> */}
       <AppStackNavigator />
     </NavigationContainer>
