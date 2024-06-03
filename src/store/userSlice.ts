@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axiosManager from "../../AxiosClient";
+import axiosManager from "../axios/AxiosClient";
 import { User } from "./types";
 
 interface UserState {

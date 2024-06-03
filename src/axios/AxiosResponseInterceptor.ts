@@ -1,4 +1,4 @@
-import axiosManager from "./AxiosClient";
+import axiosManager from "./services/AxiosClient";
 import store from "./src/store/index";
 import { removeAccessToken } from "./src/store/authSlice";
 

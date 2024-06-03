@@ -19,8 +19,6 @@ const Navigation: React.FC = () => {
   return (
     <NavigationContainer>
       {!token ? <AuthStackNavigator /> : <AppStackNavigator />}
-      {/* <AuthStackNavigator /> */}
-      {/* <AppStackNavigator /> */}
     </NavigationContainer>
   );
 };
