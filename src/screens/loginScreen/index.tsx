@@ -19,6 +19,7 @@ import axiosManager from "axios/AxiosClient";
 import { useAppDispatch } from "components/general/Hooks";
 import { setUser } from "store/userSlice";
 import { addAccessToken } from "store/authSlice";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
@@ -89,9 +90,10 @@ const LoginScreen: React.FC = () => {
     <SafeAreaWrapper>
       <Spinner visible={isLoading} />
 
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      {/* <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}> */}
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Box flex={1} mx="5" justifyContent="center">
+          <Box flex={1} mx="5" pt="13">
             <Text variant="text2Xl" fontWeight={700}>
               Добро пожаловать!
             </Text>
@@ -124,7 +126,7 @@ const LoginScreen: React.FC = () => {
             </Text>
           </Box>
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </SafeAreaWrapper>
   );
 };

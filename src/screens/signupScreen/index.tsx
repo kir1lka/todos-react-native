@@ -7,6 +7,7 @@ import Button from "components/button/Button";
 import {
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -19,6 +20,7 @@ import { addAccessToken } from "store/authSlice";
 import { setUser } from "store/userSlice";
 import Spinner from "react-native-loading-spinner-overlay";
 import { ErrorList } from "components/general/ErrorList";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 type SignupScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
@@ -42,7 +44,6 @@ const SignupScreen: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<ErrorState>({});
 
@@ -83,9 +84,10 @@ const SignupScreen: React.FC = () => {
     <SafeAreaWrapper>
       <Spinner visible={isLoading} />
 
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      {/* <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}> */}
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Box flex={1} mx="5" justifyContent="center">
+          <Box flex={1} mx="5" pt="13">
             <Text variant="text2Xl" fontWeight={700}>
               Добро пожаловать!
             </Text>
@@ -123,7 +125,7 @@ const SignupScreen: React.FC = () => {
             </Text>
           </Box>
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </SafeAreaWrapper>
   );
 };
