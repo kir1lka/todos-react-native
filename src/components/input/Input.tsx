@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { Ref, useRef, useState } from "react";
 import { TextInput, TouchableOpacity } from "react-native";
 import theme, { Box, Text } from "utils/theme";
 
 type InputProps = {
   textHolder: string;
+  // inputRef: Ref<TextInput>;
   onSubmitEditing?: () => void;
+  onChangeText?: (text: string) => void;
   keyboardType?: keyboardTypeProps;
   password?: boolean;
   error?: boolean;
@@ -15,12 +17,13 @@ type keyboardTypeProps = "default" | "email-address" | "numeric";
 const Input: React.FC<InputProps> = ({
   textHolder,
   onSubmitEditing,
+  onChangeText,
+  // inputRef,
   keyboardType = "default",
   error = false,
   password = false,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<TextInput>(null);
 
   return (
     <Box>
@@ -43,6 +46,8 @@ const Input: React.FC<InputProps> = ({
         clearButtonMode="always"
         secureTextEntry={password}
         returnKeyType="done"
+        onChangeText={(text) => onChangeText?.(text)}
+        // ref={inputRef}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onSubmitEditing={onSubmitEditing}

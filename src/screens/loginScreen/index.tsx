@@ -5,21 +5,43 @@ import { AuthStackParamList } from "navigation/types";
 import SafeAreaWrapper from "components/general/SafeAreaWrapper";
 import Input from "components/input/Input";
 import Button from "components/button/Button";
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  TextInput,
   TouchableWithoutFeedback,
 } from "react-native";
+import Spinner from "react-native-loading-spinner-overlay";
+import { ErrorList } from "components/general/ErrorList";
+import axiosManager from "axios/AxiosClient";
+import { useAppDispatch } from "components/general/Hooks";
+import { setUser } from "store/userSlice";
+import { addAccessToken } from "store/authSlice";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
   "Login"
 >;
 
+type ErrorState = {
+  [key: string]: string[];
+};
+
+type Payload = {
+  email: string | undefined;
+  password: string | undefined;
+};
+
 const LoginScreen: React.FC = () => {
-  const [isError, setIsError] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<ErrorState>({});
 
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
@@ -27,30 +49,69 @@ const LoginScreen: React.FC = () => {
     navigation.navigate("Signup");
   };
 
+  //function
+  const onSubmit = () => {
+    setIsLoading(true);
+
+    const payload: Payload = {
+      email: email,
+      password: password,
+    };
+
+    console.log(password);
+
+    axiosManager
+      .post("/login", payload)
+      .then((res) => {
+        dispatch(setUser(res.data.user));
+        dispatch(addAccessToken(res.data.token));
+        setIsLoading(false);
+        console.log(res);
+      })
+      .catch((err) => {
+        const res = err.response;
+        console.log(err);
+
+        if (res && res.status === 422) {
+          if (res.data.errors) {
+            setErrors(res.data.errors);
+          } else {
+            setErrors({
+              email: [res.data.message],
+            });
+          }
+        }
+        setIsLoading(false);
+      });
+  };
+
   return (
     <SafeAreaWrapper>
+      <Spinner visible={isLoading} />
+
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Box flex={1} mx="5" justifyContent="center">
             <Text variant="text2Xl" fontWeight={700}>
               Добро пожаловать!
             </Text>
-
+            <ErrorList errors={errors} />
             <Input
               textHolder="Почта"
               keyboardType="email-address"
-              error={isError}
+              onChangeText={(text) => setEmail(text)}
             />
-            <Input textHolder="Пароль" error={isError} password={true} />
+            <Input
+              textHolder="Пароль"
+              password={true}
+              onChangeText={(text) => setPassword(text)}
+            />
 
             <Box mt="6.5" width="100%" alignSelf="center" mb="13">
-              <Button
-                onPress={() => setIsError(!isError)}
-                label="Авторизация"
-              />
+              <Button onPress={onSubmit} label="Авторизация" />
             </Box>
             <Text variant="textLg" textAlign="center" fontWeight={500}>
-              Есть аккаунт?{" "}
+              Нет аккаунта?{" "}
               <Text
                 variant="textLg"
                 color="primary"
