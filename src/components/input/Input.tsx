@@ -6,25 +6,18 @@ type InputProps = {
   textHolder: string;
   onSubmitEditing?: () => void;
   keyboardType?: keyboardTypeProps;
-  error?: undefined;
+  password?: boolean;
+  error?: boolean;
 };
 
-type keyboardTypeProps =
-  | "default"
-  | "email-address"
-  | "numeric"
-  | "phone-pad"
-  | "ascii-capable"
-  | "numbers-and-punctuation"
-  | "url"
-  | "number-pad"
-  | "name-phone-pad"
-  | "decimal-pad";
+type keyboardTypeProps = "default" | "email-address" | "numeric";
 
 const Input: React.FC<InputProps> = ({
   textHolder,
   onSubmitEditing,
   keyboardType = "default",
+  error = false,
+  password = false,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
@@ -34,7 +27,11 @@ const Input: React.FC<InputProps> = ({
       <TextInput
         style={{
           marginTop: theme.spacing[6.5],
-          borderColor: isFocused ? theme.colors.primary : theme.colors.gray300,
+          borderColor: isFocused
+            ? theme.colors.primary
+            : !isFocused && error
+            ? theme.colors.red500
+            : theme.colors.gray300,
           width: "100%",
           fontSize: 18,
           borderWidth: 2,
@@ -43,7 +40,9 @@ const Input: React.FC<InputProps> = ({
         }}
         keyboardType={keyboardType}
         placeholder={textHolder}
-        returnKeyType="next"
+        clearButtonMode="always"
+        secureTextEntry={password}
+        returnKeyType="done"
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onSubmitEditing={onSubmitEditing}
