@@ -1,3 +1,4 @@
+import Icons from "components/general/icons";
 import React, { Ref, useRef, useState } from "react";
 import { TextInput, TouchableOpacity } from "react-native";
 import theme, { Box, Text } from "utils/theme";

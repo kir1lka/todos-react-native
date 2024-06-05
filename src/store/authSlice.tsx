@@ -13,7 +13,6 @@ const authSlice = createSlice({
       state.accessToken = action.payload;
     },
     removeAccessToken(state) {
-      console.log("token" + state.accessToken);
       state.accessToken = null;
     },
   },

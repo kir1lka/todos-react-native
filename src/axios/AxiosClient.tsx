@@ -4,10 +4,15 @@ const axiosManager = axios.create({
   baseURL: `https://32cb-95-71-23-30.ngrok-free.app/api`,
 });
 
+let accessToken = "";
+
+export const setAccessToken = (token: string) => {
+  accessToken = token;
+};
+
 axiosManager.interceptors.request.use((config) => {
-  const token = "";
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
   return config;
 });

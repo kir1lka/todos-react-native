@@ -28,6 +28,7 @@ const AuthStackNavigator: React.FC = () => {
         component={SignupScreen}
         options={{
           headerShown: false,
+          gestureEnabled: false,
         }}
       />
     </Stack.Navigator>

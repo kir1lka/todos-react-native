@@ -1,6 +1,6 @@
-import axiosManager from "./services/AxiosClient";
-import store from "./src/store/index";
-import { removeAccessToken } from "./src/store/authSlice";
+import axiosManager from "./AxiosClient";
+import store from "../store/index";
+import { removeAccessToken } from "../store/authSlice";
 
 axiosManager.interceptors.response.use(
   (response) => {
