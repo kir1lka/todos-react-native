@@ -2,7 +2,13 @@ import { Pressable, TouchableOpacity } from "react-native";
 import theme, { Box, Text } from "utils/theme";
 import { Feather } from "@expo/vector-icons";
 
-type TextAligin = "left" | "auto" | "right" | "justify" | "center";
+type TextAligin =
+  | "center"
+  | "flex-start"
+  | "flex-end"
+  | "space-between"
+  | "space-around"
+  | "space-evenly";
 
 type ButtonProps = {
   label: string;
@@ -33,7 +39,7 @@ const Button: React.FC<ButtonProps> = ({
         py="3.5"
         borderRadius="rounded-2xl"
         flexDirection="row"
-        alignItems="center"
+        justifyContent={textAlign}
         px="4"
       >
         {iconName !== "" && (
@@ -44,7 +50,6 @@ const Button: React.FC<ButtonProps> = ({
           variant="textBase"
           color="white"
           fontWeight={700}
-          textAlign={textAlign}
           ml={iconName !== "" ? "2" : "0"}
         >
           {label}

@@ -109,7 +109,7 @@ const LoginScreen: React.FC = () => {
               onChangeText={(text) => setPassword(text)}
             />
 
-            <Box mt="6.5" width="100%" alignSelf="center" mb="13">
+            <Box mt="6.5" width="100%" mb="13">
               <Button onPress={onSubmit} label="Авторизация" />
             </Box>
             <Text variant="textLg" textAlign="center" fontWeight={500}>

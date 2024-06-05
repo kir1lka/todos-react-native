@@ -9,8 +9,6 @@ import { geAllCategories } from "store/categoriesSlice";
 import Loader from "components/general/Loader";
 import { FlatList } from "react-native";
 import Category from "components/categories/Category";
-import { ICategory } from "store/types";
-import CreateNewList from "components/categories/CreateNewList";
 import Button from "components/button/Button";
 
 type CategoriesScreenNavigationProp = NativeStackNavigationProp<
@@ -49,12 +47,11 @@ const CategoriesScreen: React.FC = () => {
           renderItem={({ item }) => <Category item={item} />}
           showsVerticalScrollIndicator={false}
         />
-        {/* <CreateNewList /> */}
         <Button
           label="Создать категорию"
           onPress={navigateToCreateCategory}
-          textAlign="left"
           iconName="plus"
+          textAlign="flex-start"
         />
       </Box>
     </SafeAreaWrapper>
