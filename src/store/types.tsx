@@ -15,7 +15,13 @@ export interface Color_category {
   code: string;
 }
 
-export interface Category {
+export interface Icons {
+  id: number;
+  symbol: string;
+  code: string;
+}
+
+export interface ICategory {
   id: number;
   name: string;
   id_color: number;
@@ -23,4 +29,5 @@ export interface Category {
   id_user: number;
   isEditable: boolean;
   color_category: Color_category;
+  icon: Icons;
 }

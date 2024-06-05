@@ -7,7 +7,11 @@ import SafeAreaWrapper from "components/general/SafeAreaWrapper";
 import { useAppDispatch, useAppSelector } from "components/general/Hooks";
 import { geAllCategories } from "store/categoriesSlice";
 import Loader from "components/general/Loader";
-import { Button } from "react-native";
+import { FlatList } from "react-native";
+import Category from "components/categories/Category";
+import { ICategory } from "store/types";
+import CreateNewList from "components/categories/CreateNewList";
+import Button from "components/button/Button";
 
 type CategoriesScreenNavigationProp = NativeStackNavigationProp<
   CategoriesStackParamList,
@@ -25,17 +29,32 @@ const CategoriesScreen: React.FC = () => {
     dispatch(geAllCategories());
   }, [dispatch]);
 
+  //functions
+  const navigateToCreateCategory = () => {
+    navigation.navigate("CreateCategory", {});
+  };
+
   if (loading) {
     return <Loader />;
   }
 
   return (
     <SafeAreaWrapper>
-      <Box>
-        <Text variant="textBase">CategoriesScreen</Text>
+      <Box flex={1} mx="5">
+        <Text variant="text2Xl" fontWeight={700} mb="6.5">
+          Категории
+        </Text>
+        <FlatList
+          data={categories}
+          renderItem={({ item }) => <Category item={item} />}
+          showsVerticalScrollIndicator={false}
+        />
+        {/* <CreateNewList /> */}
         <Button
-          title="geAllCategories"
-          onPress={() => dispatch(geAllCategories())}
+          label="Создать категорию"
+          onPress={navigateToCreateCategory}
+          textAlign="left"
+          iconName="plus"
         />
       </Box>
     </SafeAreaWrapper>

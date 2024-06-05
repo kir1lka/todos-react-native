@@ -6,7 +6,7 @@ const Loader = () => {
   return (
     <SafeAreaWrapper>
       <Box flex={1} alignItems="center" justifyContent="center">
-        <ActivityIndicator />
+        <ActivityIndicator size="large" />
       </Box>
     </SafeAreaWrapper>
   );

@@ -1,5 +1,6 @@
 import { CompositeNavigationProp, NavigatorScreenParams } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeLinearGradientProps } from "expo-linear-gradient/build/NativeLinearGradient.types";
 
 export type AuthStackParamList ={
      Welcome:undefined,
@@ -50,3 +51,5 @@ export type AuthScreenNavigationType<RootName extends keyof AuthStackParamList> 
     NativeStackNavigationProp<AuthStackParamList, RootName>,
     NativeStackNavigationProp<AppStackParamList, "Root">
 >;
+
+// export type CategoriesScreenNavigationType = NativeStackNavigationProp<CategoriesStackParamList>

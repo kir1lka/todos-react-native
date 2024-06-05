@@ -1,11 +1,16 @@
 import { Pressable, TouchableOpacity } from "react-native";
-import { Box, Text } from "utils/theme";
+import theme, { Box, Text } from "utils/theme";
+import { Feather } from "@expo/vector-icons";
+
+type TextAligin = "left" | "auto" | "right" | "justify" | "center";
 
 type ButtonProps = {
   label: string;
   onPress: () => void;
+  textAlign?: TextAligin;
   onLongPress?: () => void;
   disabled?: boolean;
+  iconName?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -13,6 +18,8 @@ const Button: React.FC<ButtonProps> = ({
   onPress,
   onLongPress,
   disabled,
+  iconName = "",
+  textAlign = "center",
 }) => {
   return (
     <TouchableOpacity
@@ -25,12 +32,20 @@ const Button: React.FC<ButtonProps> = ({
         bg={disabled ? "gray800" : "primary"}
         py="3.5"
         borderRadius="rounded-2xl"
+        flexDirection="row"
+        alignItems="center"
+        px="4"
       >
+        {iconName !== "" && (
+          <Feather name="plus" size={24} color={theme.colors.white} />
+        )}
+
         <Text
           variant="textBase"
           color="white"
           fontWeight={700}
-          textAlign="center"
+          textAlign={textAlign}
+          ml={iconName !== "" ? "2" : "0"}
         >
           {label}
         </Text>

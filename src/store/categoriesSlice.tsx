@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosManager from "../axios/AxiosClient";
-import { Category } from "./types";
+import { ICategory } from "./types";
 
 interface categoriesState {
-  categories: Category[];
+  categories: ICategory[];
   loading: boolean;
   error: string | null;
 }
@@ -15,7 +15,7 @@ const initialState: categoriesState = {
 };
 
 export const geAllCategories = createAsyncThunk<
-  Category[],
+  ICategory[],
   undefined,
   { rejectValue: string }
 >("user/geAllCategories", async function (_, { rejectWithValue }) {
@@ -46,7 +46,7 @@ const categoriesSlice = createSlice({
         state.categories = action.payload;
         state.error = null;
 
-        // console.log(state.categories);
+        console.log(state.categories);
       })
       .addCase(geAllCategories.rejected, (state, action) => {
         state.loading = false;

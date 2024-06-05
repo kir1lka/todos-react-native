@@ -5,6 +5,7 @@ import { textVariants } from "./text-variants";
 const theme = createTheme({
      colors:colors,
      spacing:{
+          "0":0,
           "1":4,
           "2":8,
           "3":12,
