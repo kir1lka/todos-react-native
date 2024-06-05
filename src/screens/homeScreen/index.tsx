@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button } from "react-native";
 import { Box, Text } from "utils/theme";
-import { HomeStackParamList } from "navigation/types";
+import { AuthStackParamList, HomeStackParamList } from "navigation/types";
 import SafeAreaWrapper from "components/general/SafeAreaWrapper";
 import { useAppDispatch } from "components/general/Hooks";
 import { removeAccessToken } from "store/authSlice";
@@ -30,7 +30,7 @@ const HomeScreen: React.FC = () => {
 
   return (
     <SafeAreaWrapper>
-      <Box>
+      <Box flex={1} backgroundColor="red100">
         <Text variant="textBase">HomeScreen</Text>
         <Button title="to editTask" onPress={navigateToEditTask} />
         <Button title="onLogout" onPress={onLogout} />

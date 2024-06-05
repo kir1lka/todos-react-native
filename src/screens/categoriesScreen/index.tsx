@@ -47,12 +47,12 @@ const CategoriesScreen: React.FC = () => {
           renderItem={({ item }) => <Category item={item} />}
           showsVerticalScrollIndicator={false}
         />
-        <Button
-          label="Создать категорию"
-          onPress={navigateToCreateCategory}
-          iconName="plus"
-          textAlign="flex-start"
-        />
+        <Box mb="4">
+          <Button
+            label="Создать категорию"
+            onPress={navigateToCreateCategory}
+          />
+        </Box>
       </Box>
     </SafeAreaWrapper>
   );

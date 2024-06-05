@@ -7,9 +7,9 @@ type CategoryProps = {
 };
 
 const Category: React.FC<CategoryProps> = ({ item }) => (
-  <Box p="4" backgroundColor="gray200" borderRadius="rounded-2xl" mb="3.5">
+  <Box p="4" backgroundColor="gray250" borderRadius="rounded-2xl" mb="3.5">
     <Box flexDirection="row">
-      <Text variant="textLg" fontWeight={500}>
+      <Text variant="textLg" fontWeight={500} mr="2">
         {item.icon.symbol}
       </Text>
       <Text variant="textLg" fontWeight={500}>

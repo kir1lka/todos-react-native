@@ -1,3 +1,6 @@
+import { nanoid } from "nanoid"
+import { Color_category, Icons } from "store/types"
+
 export const palette = {
      white: "#ffffff",
      primary: "#007AFF",
@@ -382,3 +385,5 @@ export const palette = {
      rose800: palette.rose800,
      rose900: palette.rose900,
    }
+
+  

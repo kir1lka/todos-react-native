@@ -8,7 +8,10 @@ type SafeAreaWrapperProps = {
 
 const SafeAreaWrapper: React.FC<SafeAreaWrapperProps> = ({ children }) => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.white }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: theme.colors.white }}
+      edges={["right", "top", "left"]}
+    >
       {children}
     </SafeAreaView>
   );
