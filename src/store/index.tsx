@@ -2,6 +2,8 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
 import userReducer from "./userSlice";
 import categoriesReducer from "./categoriesSlice";
+import iconsReducer from "./iconsSlice";
+import colorsReducer from "./colorsSlice";
 import {
   persistStore,
   persistReducer,
@@ -17,6 +19,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
+  icons: iconsReducer,
+  colors: colorsReducer,
   categories: categoriesReducer,
 });
 

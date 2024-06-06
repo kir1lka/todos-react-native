@@ -39,7 +39,7 @@ const CategoriesScreen: React.FC = () => {
   return (
     <SafeAreaWrapper>
       <Box flex={1} mx="5">
-        <Text variant="text2Xl" fontWeight={700} mb="6.5">
+        <Text variant="text3Xl" fontWeight={700} mt="4" mb="6.5">
           Категории
         </Text>
         <FlatList

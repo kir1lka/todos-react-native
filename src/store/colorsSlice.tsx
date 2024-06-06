@@ -1,26 +1,26 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosManager from "../axios/AxiosClient";
-import { ICategory } from "./types";
+import { Color_category, ICategory, Icons } from "./types";
 
-interface categoriesState {
-  categories: ICategory[];
+interface colorsState {
+  colors: Color_category[];
   loading: boolean;
   error: string | null;
 }
 
-const initialState: categoriesState = {
-  categories: [],
+const initialState: colorsState = {
+  colors: [],
   loading: false,
   error: "",
 };
 
-export const geAllCategories = createAsyncThunk<
-  ICategory[],
+export const geAllColors = createAsyncThunk<
+  Color_category[],
   undefined,
   { rejectValue: string }
->("categories/geAllCategories", async function (_, { rejectWithValue }) {
+>("colors/geAllColors", async function (_, { rejectWithValue }) {
   try {
-    const response = await axiosManager.get("/categories");
+    const response = await axiosManager.get("/colors");
     return response.data;
   } catch (error: any) {
     if (error.response && error.response.status === 422) {
@@ -31,34 +31,36 @@ export const geAllCategories = createAsyncThunk<
   }
 });
 
-const categoriesSlice = createSlice({
-  name: "categories",
+const iconsSlice = createSlice({
+  name: "colors",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(geAllCategories.pending, (state) => {
+      .addCase(geAllColors.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(geAllCategories.fulfilled, (state, action) => {
+      .addCase(geAllColors.fulfilled, (state, action) => {
         state.loading = false;
-        state.categories = action.payload;
+        state.colors = action.payload;
         state.error = null;
 
-        console.log(state.categories);
+        console.log("colors");
+        console.log(state.colors);
       })
-      .addCase(geAllCategories.rejected, (state, action) => {
+      .addCase(geAllColors.rejected, (state, action) => {
         state.loading = false;
         if (action.payload) {
           state.error = action.payload;
         }
 
-        // console.log(action.payload);
+        console.log("colors");
+        console.log(action.payload);
       });
   },
 });
 
-export const {} = categoriesSlice.actions;
+export const {} = iconsSlice.actions;
 
-export default categoriesSlice.reducer;
+export default iconsSlice.reducer;

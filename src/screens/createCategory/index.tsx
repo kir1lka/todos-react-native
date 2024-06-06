@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { TouchableOpacity } from "react-native";
@@ -10,6 +10,9 @@ import { Color_category, ICategory, Icons } from "store/types";
 import Button from "components/button/Button";
 import { getColors, getIcons } from "helpers/helper";
 import Input from "components/input/Input";
+import { useAppDispatch, useAppSelector } from "components/general/Hooks";
+import { geAllColors } from "store/colorsSlice";
+import { geAllIcons } from "store/iconsSlice";
 
 const COLORS = getColors();
 const ICONS = getIcons();
@@ -23,6 +26,11 @@ type CreateCategotyScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 const CreateCategotyScreen: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const icons = useAppSelector((state) => state.icons);
+  const colors = useAppSelector((state) => state.colors);
+
   const navigation = useNavigation<CreateCategotyScreenNavigationProp>();
 
   const [newCategory, setNewCategory] = useState<
@@ -34,6 +42,11 @@ const CreateCategotyScreen: React.FC = () => {
     color_category: DEFAULT_COLOR,
     icon: DEFAULT_ICONS,
   });
+
+  useEffect(() => {
+    dispatch(geAllColors());
+    dispatch(geAllIcons());
+  }, []);
 
   //functions
   const updateColor = (color: Color_category) => {
@@ -89,8 +102,9 @@ const CreateCategotyScreen: React.FC = () => {
               variant="textBase"
               fontWeight={500}
               color={newCategory.color_category.name as any}
+              textDecorationLine="underline"
             >
-              Цвета
+              Цвет
             </Text>
           </Box>
           <Box flexDirection="row" justifyContent="space-evenly">

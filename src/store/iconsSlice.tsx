@@ -1,26 +1,26 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosManager from "../axios/AxiosClient";
-import { ICategory } from "./types";
+import { ICategory, Icons } from "./types";
 
-interface categoriesState {
-  categories: ICategory[];
+interface iconsState {
+  icons: Icons[];
   loading: boolean;
   error: string | null;
 }
 
-const initialState: categoriesState = {
-  categories: [],
+const initialState: iconsState = {
+  icons: [],
   loading: false,
   error: "",
 };
 
-export const geAllCategories = createAsyncThunk<
-  ICategory[],
+export const geAllIcons = createAsyncThunk<
+  Icons[],
   undefined,
   { rejectValue: string }
->("categories/geAllCategories", async function (_, { rejectWithValue }) {
+>("icons/geAllIcons", async function (_, { rejectWithValue }) {
   try {
-    const response = await axiosManager.get("/categories");
+    const response = await axiosManager.get("/icons");
     return response.data;
   } catch (error: any) {
     if (error.response && error.response.status === 422) {
@@ -31,34 +31,36 @@ export const geAllCategories = createAsyncThunk<
   }
 });
 
-const categoriesSlice = createSlice({
-  name: "categories",
+const iconsSlice = createSlice({
+  name: "icons",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(geAllCategories.pending, (state) => {
+      .addCase(geAllIcons.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(geAllCategories.fulfilled, (state, action) => {
+      .addCase(geAllIcons.fulfilled, (state, action) => {
         state.loading = false;
-        state.categories = action.payload;
+        state.icons = action.payload;
         state.error = null;
 
-        console.log(state.categories);
+        console.log("icons");
+        console.log(state.icons);
       })
-      .addCase(geAllCategories.rejected, (state, action) => {
+      .addCase(geAllIcons.rejected, (state, action) => {
         state.loading = false;
         if (action.payload) {
           state.error = action.payload;
         }
 
-        // console.log(action.payload);
+        console.log("icons");
+        console.log(action.payload);
       });
   },
 });
 
-export const {} = categoriesSlice.actions;
+export const {} = iconsSlice.actions;
 
-export default categoriesSlice.reducer;
+export default iconsSlice.reducer;

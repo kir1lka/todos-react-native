@@ -17,7 +17,7 @@ const BottomTabsNavigatort: React.FC = () => {
     <Tabs.Navigator
       screenOptions={{
         tabBarInactiveTintColor: theme.colors.gray550,
-        tabBarActiveTintColor: "black",
+        tabBarActiveTintColor: theme.colors.primary,
         tabBarHideOnKeyboard: true,
       }}
     >
