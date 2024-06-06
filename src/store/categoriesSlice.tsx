@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosManager from "../axios/AxiosClient";
-import { ICategory } from "./types";
+import { ICategory, ICategoryRequest } from "./types";
 
 interface categoriesState {
   categories: ICategory[];
@@ -14,13 +14,30 @@ const initialState: categoriesState = {
   error: "",
 };
 
-export const geAllCategories = createAsyncThunk<
+export const getAllCategories = createAsyncThunk<
   ICategory[],
   undefined,
   { rejectValue: string }
->("categories/geAllCategories", async function (_, { rejectWithValue }) {
+>("categories/getAllCategories", async function (_, { rejectWithValue }) {
   try {
     const response = await axiosManager.get("/categories");
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.status === 422) {
+      return rejectWithValue(error.response.data);
+    } else {
+      return rejectWithValue(error.message);
+    }
+  }
+});
+
+export const AddCategories = createAsyncThunk<
+  ICategory,
+  ICategoryRequest,
+  { rejectValue: any }
+>("categories/AddCategories", async function (categoty, { rejectWithValue }) {
+  try {
+    const response = await axiosManager.post("/categories", categoty);
     return response.data;
   } catch (error: any) {
     if (error.response && error.response.status === 422) {
@@ -37,24 +54,47 @@ const categoriesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(geAllCategories.pending, (state) => {
+      .addCase(getAllCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(geAllCategories.fulfilled, (state, action) => {
+      .addCase(getAllCategories.fulfilled, (state, action) => {
         state.loading = false;
         state.categories = action.payload;
         state.error = null;
 
         console.log(state.categories);
       })
-      .addCase(geAllCategories.rejected, (state, action) => {
+      .addCase(getAllCategories.rejected, (state, action) => {
         state.loading = false;
         if (action.payload) {
           state.error = action.payload;
         }
 
         // console.log(action.payload);
+      })
+
+      .addCase(AddCategories.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(AddCategories.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.categories = action.payload;
+        state.error = null;
+
+        console.log(state.categories);
+      })
+      .addCase(AddCategories.rejected, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.error = action.payload.errors || action.payload;
+        }
+        // else {
+        //   state.error = action.error.message;
+        // }
+
+        console.log(action.payload);
       });
   },
 });

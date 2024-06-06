@@ -5,11 +5,12 @@ import { Box, Text } from "utils/theme";
 import { CategoriesStackParamList } from "navigation/types";
 import SafeAreaWrapper from "components/general/SafeAreaWrapper";
 import { useAppDispatch, useAppSelector } from "components/general/Hooks";
-import { geAllCategories } from "store/categoriesSlice";
+import { getAllCategories } from "store/categoriesSlice";
 import Loader from "components/general/Loader";
 import { FlatList } from "react-native";
 import Category from "components/categories/Category";
 import Button from "components/button/Button";
+import CategorySkeleton from "components/categories/CategorySkeleton";
 
 type CategoriesScreenNavigationProp = NativeStackNavigationProp<
   CategoriesStackParamList,
@@ -24,7 +25,7 @@ const CategoriesScreen: React.FC = () => {
   const { categories, loading } = useAppSelector((state) => state.categories);
 
   useEffect(() => {
-    dispatch(geAllCategories());
+    dispatch(getAllCategories());
   }, [dispatch]);
 
   //functions
@@ -32,9 +33,9 @@ const CategoriesScreen: React.FC = () => {
     navigation.navigate("CreateCategory", {});
   };
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   return (
     <SafeAreaWrapper>
@@ -42,11 +43,22 @@ const CategoriesScreen: React.FC = () => {
         <Text variant="text3Xl" fontWeight={700} mt="4" mb="6.5">
           Категории
         </Text>
-        <FlatList
-          data={categories}
-          renderItem={({ item }) => <Category item={item} />}
-          showsVerticalScrollIndicator={false}
-        />
+        {loading && (
+          <Box flex={1}>
+            <CategorySkeleton />
+            <CategorySkeleton />
+            <CategorySkeleton />
+          </Box>
+        )}
+
+        {!loading && (
+          <FlatList
+            data={categories}
+            renderItem={({ item }) => <Category item={item} />}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+
         <Box mb="4">
           <Button
             label="Создать категорию"

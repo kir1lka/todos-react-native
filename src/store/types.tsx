@@ -28,6 +28,14 @@ export interface ICategory {
   id_icon: number;
   id_user: number;
   isEditable: boolean;
-  color_category: Color_category;
-  icon: Icons;
+  color_category: Color_category | null;
+  icon: Icons | null;
+}
+
+export interface ICategoryRequest {
+  name: string;
+  id_color: number;
+  id_icon: number;
+  id_user: number;
+  isEditable: boolean;
 }
