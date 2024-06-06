@@ -40,7 +40,7 @@ const CategoriesScreen: React.FC = () => {
   return (
     <SafeAreaWrapper>
       <Box flex={1} mx="5">
-        <Text variant="text3Xl" fontWeight={700} mt="4" mb="6.5">
+        <Text variant="text3Xl" fontWeight={700} mt="4" mb="4">
           Категории
         </Text>
         {loading && (
@@ -59,7 +59,7 @@ const CategoriesScreen: React.FC = () => {
           />
         )}
 
-        <Box mb="4">
+        <Box mb="4" mt="2">
           <Button
             label="Создать категорию"
             onPress={navigateToCreateCategory}

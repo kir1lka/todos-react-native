@@ -5,6 +5,7 @@ import theme, { Box, Text } from "utils/theme";
 
 type InputProps = {
   textHolder: string;
+  value?: string;
   // inputRef: Ref<TextInput>;
   onSubmitEditing?: () => void;
   onChangeText?: (text: string) => void;
@@ -20,6 +21,7 @@ const Input: React.FC<InputProps> = ({
   onSubmitEditing,
   onChangeText,
   // inputRef,
+  value = "",
   keyboardType = "default",
   error = false,
   password = false,
@@ -42,6 +44,7 @@ const Input: React.FC<InputProps> = ({
           borderRadius: theme.borderRadii["rounded-2xl"],
           padding: theme.spacing[3.5],
         }}
+        value={value}
         keyboardType={keyboardType}
         placeholder={textHolder}
         clearButtonMode="always"

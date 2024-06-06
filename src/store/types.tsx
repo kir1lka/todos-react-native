@@ -33,6 +33,7 @@ export interface ICategory {
 }
 
 export interface ICategoryRequest {
+  id: number;
   name: string;
   id_color: number;
   id_icon: number;

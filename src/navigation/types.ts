@@ -1,5 +1,6 @@
 import { CompositeNavigationProp, NavigatorScreenParams } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ICategory } from "store/types";
 
 
 
@@ -9,7 +10,7 @@ export type CategoriesStackParamList ={
           id: number
      },
      CreateCategory:{
-          id?: number
+          category?: ICategory
      },
      EditCategory:undefined,
 }

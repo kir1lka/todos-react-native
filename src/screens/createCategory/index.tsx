@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { TouchableOpacity } from "react-native";
 import theme, { Box, Text } from "utils/theme";
@@ -20,7 +20,11 @@ import { geAllIcons } from "store/iconsSlice";
 import Loader from "components/general/Loader";
 import { ErrorList } from "components/general/ErrorList";
 import Spinner from "react-native-loading-spinner-overlay";
-import { AddCategories, getAllCategories } from "store/categoriesSlice";
+import {
+  AddCategories,
+  EditCategory,
+  getAllCategories,
+} from "store/categoriesSlice";
 
 type ErrorState = {
   [key: string]: string[];
@@ -31,7 +35,13 @@ type CreateCategotyScreenNavigationProp = NativeStackNavigationProp<
   "CreateCategory"
 >;
 
+type CreateCategoryRouteTypes = RouteProp<
+  CategoriesStackParamList,
+  "CreateCategory"
+>;
+
 const CreateCategotyScreen: React.FC = () => {
+  const route = useRoute<CreateCategoryRouteTypes>();
   const dispatch = useAppDispatch();
 
   const { categories, error, loading } = useAppSelector(
@@ -51,9 +61,9 @@ const CreateCategotyScreen: React.FC = () => {
       "id" | "user" | "id_user" | "id_icon" | "id_color" | "isEditable"
     >
   >({
-    name: "",
-    color_category: null,
-    icon: null,
+    name: route.params.category?.name ?? "",
+    color_category: route.params.category?.color_category ?? null,
+    icon: route.params.category?.icon ?? null,
   });
 
   useEffect(() => {
@@ -62,13 +72,19 @@ const CreateCategotyScreen: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (colors.colors.length > 0 && icons.icons.length > 0) {
+    if (
+      !route.params.category &&
+      colors.colors.length > 0 &&
+      icons.icons.length > 0
+    ) {
       setNewCategory((prev) => ({
         ...prev,
         color_category: colors.colors[0],
         icon: icons.icons[0],
       }));
+      setErrors({});
     }
+    setErrors({});
   }, [colors.colors, icons.icons]);
 
   useEffect(() => {
@@ -98,9 +114,10 @@ const CreateCategotyScreen: React.FC = () => {
     });
   };
 
-  const SubmitaddCategory = async () => {
+  const SubmitAddEditCategory = async () => {
     if (user) {
       let category: ICategoryRequest = {
+        id: route.params.category?.id || 0,
         name: newCategory.name,
         id_color: newCategory.color_category?.id || 0,
         id_icon: newCategory.icon?.id || 0,
@@ -108,9 +125,15 @@ const CreateCategotyScreen: React.FC = () => {
         isEditable: true,
       };
 
-      await dispatch(AddCategories(category)).unwrap();
-      dispatch(getAllCategories());
-      navigation.navigate("Categories");
+      if (route.params.category) {
+        await dispatch(EditCategory(category)).unwrap();
+        dispatch(getAllCategories());
+        navigation.navigate("Categories");
+      } else {
+        await dispatch(AddCategories(category)).unwrap();
+        dispatch(getAllCategories());
+        navigation.navigate("Categories");
+      }
     }
   };
 
@@ -133,7 +156,8 @@ const CreateCategotyScreen: React.FC = () => {
         </Box>
         <Box borderRadius="rounded-2xl" mb="6">
           <Input
-            textHolder="Придумайте категорию ..."
+            value={newCategory.name}
+            textHolder="Название категории"
             onChangeText={(text) => {
               setNewCategory((prev) => {
                 return { ...prev, name: text };
@@ -233,7 +257,7 @@ const CreateCategotyScreen: React.FC = () => {
         )}
 
         <Box flex={1} justifyContent="flex-end" mb="4">
-          <Button label="Создать категорию" onPress={SubmitaddCategory} />
+          <Button label="Создать категорию" onPress={SubmitAddEditCategory} />
         </Box>
       </Box>
     </SafeAreaWrapper>
