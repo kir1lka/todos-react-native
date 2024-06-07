@@ -58,14 +58,36 @@ const CategoriesScreen: React.FC = () => {
         )}
 
         {!loading && (
-          <FlatList
-            data={categories}
-            renderItem={({ item }) => <Category item={item} />}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
-            }
-          />
+          <>
+            {categories.length > 0 ? (
+              <FlatList
+                data={categories}
+                renderItem={({ item }) => <Category item={item} />}
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={loading}
+                    onRefresh={handleRefresh}
+                  />
+                }
+              />
+            ) : (
+              <Box flex={1} justifyContent="center" alignItems="center">
+                <Text variant="textXl" fontWeight={500}>
+                  🤔 Нет категорий?{" "}
+                  <Text
+                    variant="textXl"
+                    fontWeight={500}
+                    color="primary"
+                    textDecorationLine="underline"
+                    onPress={navigateToCreateCategory}
+                  >
+                    Cоздайте их!
+                  </Text>
+                </Text>
+              </Box>
+            )}
+          </>
         )}
 
         <Box mb="2" mt="2">
