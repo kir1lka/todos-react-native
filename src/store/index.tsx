@@ -4,6 +4,7 @@ import userReducer from "./userSlice";
 import categoriesReducer from "./categoriesSlice";
 import iconsReducer from "./iconsSlice";
 import colorsReducer from "./colorsSlice";
+import tasksReducer from "./tasksSlice";
 import {
   persistStore,
   persistReducer,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   icons: iconsReducer,
   colors: colorsReducer,
   categories: categoriesReducer,
+  tasks: tasksReducer,
 });
 
 const persistConfig = {

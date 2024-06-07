@@ -4,6 +4,7 @@ import AppStackNavigator from "./AppStackNavigator";
 import { useAppDispatch, useAppSelector } from "components/general/Hooks";
 import { useEffect } from "react";
 import { getUser } from "store/userSlice";
+import { setAccessToken } from "axios/AxiosClient";
 
 const Navigation: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -13,6 +14,9 @@ const Navigation: React.FC = () => {
   useEffect(() => {
     if (!user.user && token) {
       dispatch(getUser());
+    }
+    if (token) {
+      setAccessToken(token);
     }
   }, []);
 

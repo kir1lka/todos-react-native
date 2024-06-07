@@ -21,7 +21,7 @@ const Category: React.FC<CategoryProps> = ({ item }) => {
 
   const navigateCategoryScreen = () => {
     navigation.navigate("Category", {
-      id: item.id,
+      category: item,
     });
   };
 
@@ -42,7 +42,11 @@ const Category: React.FC<CategoryProps> = ({ item }) => {
             <Text variant="textLg" fontWeight={500} mr="2">
               {item.icon?.symbol}
             </Text>
-            <Text variant="textLg" fontWeight={500}>
+            <Text
+              variant="textLg"
+              fontWeight={500}
+              style={{ color: item.color_category?.code }}
+            >
               {item.name}
             </Text>
           </Box>

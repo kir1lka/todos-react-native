@@ -40,3 +40,23 @@ export interface ICategoryRequest {
   id_user: number;
   isEditable: boolean;
 }
+
+export interface ITask {
+  id: number;
+  name: string;
+  id_category: number;
+  isCompleted: boolean;
+  id_user: number;
+  category: ICategory;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface ITaskRequest {
+  name: string;
+  id_category: number;
+  isCompleted: boolean;
+  id_user: number;
+  created_at: number;
+  updated_at: number;
+}

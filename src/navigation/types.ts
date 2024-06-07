@@ -7,7 +7,7 @@ import { ICategory } from "store/types";
 export type CategoriesStackParamList ={
      Categories:undefined,
      Category:{
-          id: number
+          category: ICategory
      },
      CreateCategory:{
           category?: ICategory
