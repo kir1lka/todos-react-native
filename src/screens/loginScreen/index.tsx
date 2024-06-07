@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
 import { ErrorList } from "components/general/ErrorList";
-import axiosManager from "axios/AxiosClient";
+import axiosManager, { setAccessToken } from "axios/AxiosClient";
 import { useAppDispatch } from "components/general/Hooks";
 import { setUser } from "store/userSlice";
 import { addAccessToken } from "store/authSlice";
@@ -66,6 +66,7 @@ const LoginScreen: React.FC = () => {
       .then((res) => {
         dispatch(setUser(res.data.user));
         dispatch(addAccessToken(res.data.token));
+        setAccessToken(res.data.token);
         setIsLoading(false);
         console.log(res);
       })

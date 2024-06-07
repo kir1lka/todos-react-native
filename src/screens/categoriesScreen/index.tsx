@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Box, Text } from "utils/theme";
@@ -7,7 +7,7 @@ import SafeAreaWrapper from "components/general/SafeAreaWrapper";
 import { useAppDispatch, useAppSelector } from "components/general/Hooks";
 import { getAllCategories } from "store/categoriesSlice";
 import Loader from "components/general/Loader";
-import { FlatList } from "react-native";
+import { FlatList, RefreshControl, ScrollView } from "react-native";
 import Category from "components/categories/Category";
 import Button from "components/button/Button";
 import CategorySkeleton from "components/categories/CategorySkeleton";
@@ -33,6 +33,10 @@ const CategoriesScreen: React.FC = () => {
     navigation.navigate("CreateCategory", {});
   };
 
+  const handleRefresh = useCallback(() => {
+    dispatch(getAllCategories());
+  }, [dispatch]);
+
   // if (loading) {
   //   return <Loader />;
   // }
@@ -48,6 +52,8 @@ const CategoriesScreen: React.FC = () => {
             <CategorySkeleton />
             <CategorySkeleton />
             <CategorySkeleton />
+            <CategorySkeleton />
+            <CategorySkeleton />
           </Box>
         )}
 
@@ -56,10 +62,13 @@ const CategoriesScreen: React.FC = () => {
             data={categories}
             renderItem={({ item }) => <Category item={item} />}
             showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
+            }
           />
         )}
 
-        <Box mb="4" mt="2">
+        <Box mb="2" mt="2">
           <Button
             label="Создать категорию"
             onPress={navigateToCreateCategory}

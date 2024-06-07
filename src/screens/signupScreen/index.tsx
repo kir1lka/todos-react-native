@@ -15,7 +15,7 @@ import {
 import Input from "components/input/Input";
 import { useRef, useState } from "react";
 import { useAppDispatch } from "components/general/Hooks";
-import axiosManager from "axios/AxiosClient";
+import axiosManager, { setAccessToken } from "axios/AxiosClient";
 import { addAccessToken } from "store/authSlice";
 import { setUser } from "store/userSlice";
 import Spinner from "react-native-loading-spinner-overlay";
@@ -68,6 +68,7 @@ const SignupScreen: React.FC = () => {
       .then((res) => {
         dispatch(setUser(res.data.user));
         dispatch(addAccessToken(res.data.token));
+        setAccessToken(res.data.token);
         setIsLoading(false);
       })
       .catch((err) => {

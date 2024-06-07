@@ -22,9 +22,11 @@ import { ErrorList } from "components/general/ErrorList";
 import Spinner from "react-native-loading-spinner-overlay";
 import {
   AddCategories,
+  DeleteCategory,
   EditCategory,
   getAllCategories,
 } from "store/categoriesSlice";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 type ErrorState = {
   [key: string]: string[];
@@ -44,15 +46,14 @@ const CreateCategotyScreen: React.FC = () => {
   const route = useRoute<CreateCategoryRouteTypes>();
   const dispatch = useAppDispatch();
 
-  const { categories, error, loading } = useAppSelector(
-    (state) => state.categories
-  );
+  const { categories, error } = useAppSelector((state) => state.categories);
   const icons = useAppSelector((state) => state.icons);
   const colors = useAppSelector((state) => state.colors);
   const user = useAppSelector((state) => state.user.user);
 
   const navigation = useNavigation<CreateCategotyScreenNavigationProp>();
 
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<ErrorState>();
 
   const [newCategory, setNewCategory] = useState<
@@ -115,26 +116,58 @@ const CreateCategotyScreen: React.FC = () => {
   };
 
   const SubmitAddEditCategory = async () => {
-    if (user) {
-      let category: ICategoryRequest = {
-        id: route.params.category?.id || 0,
-        name: newCategory.name,
-        id_color: newCategory.color_category?.id || 0,
-        id_icon: newCategory.icon?.id || 0,
-        id_user: user.id,
-        isEditable: true,
-      };
+    setLoading(true);
 
-      if (route.params.category) {
-        await dispatch(EditCategory(category)).unwrap();
-        dispatch(getAllCategories());
-        navigation.navigate("Categories");
-      } else {
-        await dispatch(AddCategories(category)).unwrap();
+    try {
+      if (user) {
+        let category: ICategoryRequest = {
+          id: route.params.category?.id || 0,
+          name: newCategory.name,
+          id_color: newCategory.color_category?.id || 0,
+          id_icon: newCategory.icon?.id || 0,
+          id_user: user.id,
+          isEditable: true,
+        };
+
+        if (route.params.category) {
+          await dispatch(EditCategory(category)).unwrap();
+          dispatch(getAllCategories());
+          navigation.navigate("Categories");
+        } else {
+          await dispatch(AddCategories(category)).unwrap();
+          dispatch(getAllCategories());
+          navigation.navigate("Categories");
+        }
+      }
+    } catch {
+      setLoading(false);
+    }
+
+    setLoading(false);
+  };
+
+  const SubmitDeleteCategory = async () => {
+    setLoading(true);
+    try {
+      if (user) {
+        let category: ICategoryRequest = {
+          id: route.params.category?.id || 0,
+          name: newCategory.name,
+          id_color: newCategory.color_category?.id || 0,
+          id_icon: newCategory.icon?.id || 0,
+          id_user: user.id,
+          isEditable: true,
+        };
+
+        await dispatch(DeleteCategory(category)).unwrap();
         dispatch(getAllCategories());
         navigation.navigate("Categories");
       }
+    } catch {
+      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   if (icons.loading && colors.loading) {
@@ -153,7 +186,23 @@ const CreateCategotyScreen: React.FC = () => {
           mt="4"
         >
           <NavigateBack />
+
+          {route.params.category && (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={SubmitDeleteCategory}
+            >
+              <Box bg="rose500" borderRadius="rounded-2xl" p="2">
+                <MaterialCommunityIcons
+                  name="delete"
+                  color={theme.colors.white}
+                  size={24}
+                />
+              </Box>
+            </TouchableOpacity>
+          )}
         </Box>
+
         <Box borderRadius="rounded-2xl" mb="6">
           <Input
             value={newCategory.name}
@@ -257,7 +306,14 @@ const CreateCategotyScreen: React.FC = () => {
         )}
 
         <Box flex={1} justifyContent="flex-end" mb="4">
-          <Button label="Создать категорию" onPress={SubmitAddEditCategory} />
+          <Button
+            label={
+              route.params.category
+                ? "Сохранить категорию"
+                : "Создать категорию"
+            }
+            onPress={SubmitAddEditCategory}
+          />
         </Box>
       </Box>
     </SafeAreaWrapper>

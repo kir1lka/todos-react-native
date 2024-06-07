@@ -30,32 +30,61 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <Box>
-      <TextInput
-        style={{
-          marginTop: theme.spacing[6.5],
-          borderColor: isFocused
-            ? theme.colors.primary
-            : !isFocused && error
-            ? theme.colors.red500
-            : theme.colors.gray300,
-          width: "100%",
-          fontSize: 18,
-          borderWidth: 2,
-          borderRadius: theme.borderRadii["rounded-2xl"],
-          padding: theme.spacing[3.5],
-        }}
-        value={value}
-        keyboardType={keyboardType}
-        placeholder={textHolder}
-        clearButtonMode="always"
-        secureTextEntry={password}
-        returnKeyType="done"
-        onChangeText={(text) => onChangeText?.(text)}
-        // ref={inputRef}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        onSubmitEditing={onSubmitEditing}
-      />
+      {value !== "" && (
+        <TextInput
+          style={{
+            marginTop: theme.spacing[6.5],
+            borderColor: isFocused
+              ? theme.colors.primary
+              : !isFocused && error
+              ? theme.colors.red500
+              : theme.colors.gray300,
+            width: "100%",
+            fontSize: 18,
+            borderWidth: 2,
+            borderRadius: theme.borderRadii["rounded-2xl"],
+            padding: theme.spacing[3.5],
+          }}
+          value={value}
+          keyboardType={keyboardType}
+          placeholder={textHolder}
+          clearButtonMode="always"
+          secureTextEntry={password}
+          returnKeyType="done"
+          onChangeText={(text) => onChangeText?.(text)}
+          // ref={inputRef}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onSubmitEditing={onSubmitEditing}
+        />
+      )}
+      {value === "" && (
+        <TextInput
+          style={{
+            marginTop: theme.spacing[6.5],
+            borderColor: isFocused
+              ? theme.colors.primary
+              : !isFocused && error
+              ? theme.colors.red500
+              : theme.colors.gray300,
+            width: "100%",
+            fontSize: 18,
+            borderWidth: 2,
+            borderRadius: theme.borderRadii["rounded-2xl"],
+            padding: theme.spacing[3.5],
+          }}
+          keyboardType={keyboardType}
+          placeholder={textHolder}
+          clearButtonMode="always"
+          secureTextEntry={password}
+          returnKeyType="done"
+          onChangeText={(text) => onChangeText?.(text)}
+          // ref={inputRef}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onSubmitEditing={onSubmitEditing}
+        />
+      )}
     </Box>
   );
 };

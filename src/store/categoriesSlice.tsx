@@ -68,6 +68,23 @@ export const EditCategory = createAsyncThunk<
   }
 });
 
+export const DeleteCategory = createAsyncThunk<
+  ICategory,
+  ICategoryRequest,
+  { rejectValue: any }
+>("categories/DeleteCategory", async function (categoty, { rejectWithValue }) {
+  try {
+    const response = await axiosManager.delete(`/categories/${categoty.id}`);
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.status === 422) {
+      return rejectWithValue(error.response.data);
+    } else {
+      return rejectWithValue(error.message);
+    }
+  }
+});
+
 const categoriesSlice = createSlice({
   name: "categories",
   initialState,
@@ -129,6 +146,29 @@ const categoriesSlice = createSlice({
         console.log(state.categories);
       })
       .addCase(EditCategory.rejected, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.error = action.payload.errors || action.payload;
+        }
+        // else {
+        //   state.error = action.error.message;
+        // }
+
+        console.log(action.payload);
+      })
+
+      .addCase(DeleteCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(DeleteCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.categories = action.payload;
+        state.error = null;
+
+        console.log(state.categories);
+      })
+      .addCase(DeleteCategory.rejected, (state, action) => {
         state.loading = false;
         if (action.payload) {
           state.error = action.payload.errors || action.payload;

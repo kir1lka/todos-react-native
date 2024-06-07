@@ -42,10 +42,6 @@ const Button: React.FC<ButtonProps> = ({
         justifyContent={textAlign}
         px="4"
       >
-        {iconName !== "" && (
-          <Feather name="plus" size={24} color={theme.colors.white} />
-        )}
-
         <Text
           variant="textBase"
           color="white"

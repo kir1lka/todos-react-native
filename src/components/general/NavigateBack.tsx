@@ -8,7 +8,7 @@ const NavigateBack: React.FC = () => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.goBack()}>
+    <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
       <Box bg="primary" borderRadius="rounded-2xl" p="2">
         <Ionicons name="chevron-back" size={24} color="#fff" />
       </Box>
