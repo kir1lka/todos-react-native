@@ -1,11 +1,11 @@
 import React from "react";
 import { ICategory } from "store/types";
 import theme, { Box, Text } from "utils/theme";
-import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CategoriesStackParamList } from "navigation/types";
 import { useNavigation } from "@react-navigation/native";
+import { Entypo } from "@expo/vector-icons";
 
 type CategoriesScreenNavigationProp = NativeStackNavigationProp<
   CategoriesStackParamList,

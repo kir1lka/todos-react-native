@@ -7,6 +7,7 @@ const theme = createTheme({
      spacing:{
           "0":0,
           "1":4,
+          "1.5":6,
           "2":8,
           "3":12,
           "3.5":14,

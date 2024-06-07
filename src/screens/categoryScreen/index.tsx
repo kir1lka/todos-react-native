@@ -84,7 +84,7 @@ const CategoryScreen: React.FC = () => {
             userId={user?.id || 0}
           />
         </Box>
-        {!loading && (
+        {/* {!loading && (
           <>
             {tasks.length > 0 ? (
               <FlatList
@@ -118,7 +118,7 @@ const CategoryScreen: React.FC = () => {
         )}
         <Box mb="2" mt="2">
           <Button label="Создать задачу" onPress={() => console.log()} />
-        </Box>
+        </Box> */}
       </Box>
     </SafeAreaWrapper>
   );

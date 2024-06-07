@@ -57,6 +57,6 @@ export interface ITaskRequest {
   id_category: number;
   isCompleted: boolean;
   id_user: number;
-  created_at: number;
-  updated_at: number;
+  created_at: string;
+  updated_at: string;
 }
