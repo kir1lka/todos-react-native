@@ -17,6 +17,7 @@ import Task from "components/categories/Task";
 import Button from "components/button/Button";
 import { ErrorList } from "components/general/ErrorList";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TaskSkeleton from "components/categories/TaskSkeleton";
 
 // type CategoryScreenNavigationProp = NativeStackNavigationProp<
 //   CategoriesStackParamList,
@@ -63,9 +64,9 @@ const CategoryScreen: React.FC = () => {
     }
   }, [error]);
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   return (
     <SafeAreaWrapper>
@@ -79,68 +80,81 @@ const CategoryScreen: React.FC = () => {
         >
           <NavigateBack />
         </Box>
-        <ScrollView style={{ flex: 1 }}>
-          <Box flexDirection="row" mb="4">
-            <Text variant="text2Xl" fontWeight={700} mr="1">
-              {category.icon?.symbol}
-            </Text>
-            <Text
-              variant="text2Xl"
-              fontWeight={700}
-              style={{
-                color: category.color_category?.code,
-              }}
-            >
-              {category.name}
-            </Text>
-          </Box>
+        {/* <ScrollView style={{ flex: 1 }}> */}
+        <Box flexDirection="row" mb="4">
+          <Text variant="text2Xl" fontWeight={700} mr="1">
+            {category.icon?.symbol}
+          </Text>
+          <Text
+            variant="text2Xl"
+            fontWeight={700}
+            style={{
+              color: category.color_category?.code,
+            }}
+          >
+            {category.name}
+          </Text>
+        </Box>
 
-          {errors && Object.keys(errors).length > 0 && (
-            <Box mb="4">
-              <ErrorList errors={errors} />
-            </Box>
-          )}
-          <Box mb="2">
-            <InputCreateTask
-              textHolder="Создать задачу"
-              categotyId={category.id}
-              userId={user?.id || 0}
-            />
+        {errors && Object.keys(errors).length > 0 && (
+          <Box mb="4">
+            <ErrorList errors={errors} />
           </Box>
+        )}
+        <Box mb="2">
+          <InputCreateTask
+            textHolder="Создать задачу"
+            categotyId={category.id}
+            userId={user?.id || 0}
+          />
+        </Box>
 
-          {!loading && (
-            <>
-              {tasks.length > 0 ? (
-                <FlatList
-                  data={tasks}
-                  renderItem={({ item }) => <Task item={item} />}
-                  showsVerticalScrollIndicator={false}
-                  // refreshControl={
-                  //   <RefreshControl
-                  //     refreshing={loading}
-                  //     onRefresh={handleRefresh}
-                  //   />
-                  // }
-                />
-              ) : (
-                <Box flex={1} justifyContent="center" alignItems="center">
-                  <Text variant="textXl" fontWeight={500}>
-                    🤔 Нет задач?{" "}
-                    <Text
-                      variant="textXl"
-                      fontWeight={500}
-                      color="primary"
-                      textDecorationLine="underline"
-                      // onPress={navigateToCreateCategory}
-                    >
-                      Cоздайте их!
-                    </Text>
+        {loading && (
+          <Box flex={1}>
+            <TaskSkeleton />
+            <TaskSkeleton />
+            <TaskSkeleton />
+            <TaskSkeleton />
+            <TaskSkeleton />
+          </Box>
+        )}
+
+        {!loading && (
+          <>
+            {tasks.length > 0 ? (
+              <FlatList
+                data={tasks}
+                renderItem={({ item }) => <Task item={item} />}
+                showsVerticalScrollIndicator={false}
+                // refreshControl={
+                //   <RefreshControl
+                //     refreshing={loading}
+                //     onRefresh={handleRefresh}
+                //   />
+                // }
+              />
+            ) : (
+              <Box flex={1} justifyContent="center" alignItems="center">
+                <Text variant="textXl" fontWeight={500}>
+                  🤔 Нет задач?{" "}
+                  <Text
+                    variant="textXl"
+                    fontWeight={500}
+                    color="primary"
+                    textDecorationLine="underline"
+                    // onPress={navigateToCreateCategory}
+                  >
+                    Cоздайте их!
                   </Text>
-                </Box>
-              )}
-            </>
-          )}
-        </ScrollView>
+                </Text>
+              </Box>
+            )}
+          </>
+        )}
+        {/* <Box mb="2" mt="2">
+          <Button label="Создать задачу" onPress={() => console.log()} />
+        </Box> */}
+        {/* </ScrollView> */}
       </Box>
     </SafeAreaWrapper>
   );

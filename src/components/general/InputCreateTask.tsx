@@ -11,7 +11,7 @@ import Category from "components/categories/Category";
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { ru } from "date-fns/locale";
-import { AddTask } from "store/tasksSlice";
+import { AddTask, getShowTasksForCategory } from "store/tasksSlice";
 
 LocaleConfig.locales["ru"] = {
   monthNames: [
@@ -107,6 +107,15 @@ const InputCreateTask: React.FC<InputProps> = ({
   const createTask = async () => {
     console.log(newTask);
     await dispatch(AddTask(newTask)).unwrap();
+    dispatch(getShowTasksForCategory(categotyId));
+    setNewTask({
+      name: "",
+      id_category: categotyId,
+      isCompleted: false,
+      id_user: userId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    });
   };
 
   // useEffect(() => {
@@ -121,9 +130,9 @@ const InputCreateTask: React.FC<InputProps> = ({
   //   // setErrors({});
   // }, [categories]);
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   return (
     <>
