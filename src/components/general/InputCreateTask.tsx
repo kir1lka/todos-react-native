@@ -11,6 +11,7 @@ import Category from "components/categories/Category";
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { ru } from "date-fns/locale";
+import { AddTask } from "store/tasksSlice";
 
 LocaleConfig.locales["ru"] = {
   monthNames: [
@@ -103,6 +104,11 @@ const InputCreateTask: React.FC<InputProps> = ({
     dispatch(getAllCategories());
   }, []);
 
+  const createTask = async () => {
+    console.log(newTask);
+    await dispatch(AddTask(newTask)).unwrap();
+  };
+
   // useEffect(() => {
   //   if (categories.length > 0 && categories.length > 0) {
   //     setCurrentCategories((prev) => ({
@@ -123,40 +129,59 @@ const InputCreateTask: React.FC<InputProps> = ({
     <>
       <Box
         style={{
-          backgroundColor: isFocused
-            ? theme.colors.primary
-            : theme.colors.gray300,
+          backgroundColor: theme.colors.gray300,
           borderRadius: theme.borderRadii["rounded-2xl"],
         }}
         mb="4"
       >
-        <TextInput
-          style={{
-            borderColor: isFocused
-              ? theme.colors.primary
-              : theme.colors.gray300,
-            backgroundColor: theme.colors.white,
-            width: "100%",
-            fontSize: 18,
-            borderWidth: 2,
-            borderRadius: theme.borderRadii["rounded-2xl"],
-            padding: theme.spacing[3.5],
-          }}
-          placeholder={textHolder}
-          clearButtonMode="always"
-          returnKeyType="done"
-          value={newTask.name}
-          onChangeText={(text) =>
-            setNewTask((prev) => {
-              return {
-                ...prev,
-                name: text,
-              };
-            })
-          }
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-        />
+        <Box flexDirection="row" gap="1">
+          <Box flex={3}>
+            <TextInput
+              style={{
+                borderColor: isFocused
+                  ? theme.colors.primary
+                  : theme.colors.gray300,
+                backgroundColor: theme.colors.white,
+                width: "100%",
+                fontSize: 18,
+                borderWidth: 2,
+                borderRadius: theme.borderRadii["rounded-2xl"],
+                padding: theme.spacing[3.5],
+              }}
+              placeholder={textHolder}
+              clearButtonMode="always"
+              returnKeyType="done"
+              value={newTask.name}
+              onChangeText={(text) =>
+                setNewTask((prev) => {
+                  return {
+                    ...prev,
+                    name: text,
+                  };
+                })
+              }
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+            />
+          </Box>
+          <TouchableOpacity
+            onPress={createTask}
+            activeOpacity={0.7}
+            style={{
+              backgroundColor: theme.colors.primary,
+              alignItems: "center",
+              alignSelf: "center",
+              flex: 1,
+              padding: 12,
+              borderRadius: theme.borderRadii["rounded-2xl"],
+              marginRight: 2,
+            }}
+          >
+            <Text variant="textBase" color="white" fontWeight={500}>
+              Создать
+            </Text>
+          </TouchableOpacity>
+        </Box>
         <Box
           p="2"
           borderRadius="rounded-2xl"
@@ -234,7 +259,7 @@ const InputCreateTask: React.FC<InputProps> = ({
       </Box>
 
       {isSelectCalendar && (
-        <Box borderRadius="rounded-2xl">
+        <Box borderRadius="rounded-2xl" mb="2">
           <Calendar
             style={{
               borderRadius: theme.borderRadii["rounded-2xl"],
@@ -286,7 +311,7 @@ const InputCreateTask: React.FC<InputProps> = ({
       )}
 
       {isSelectCategory && (
-        <Box bg="gray300" p="2" borderRadius="rounded-2xl">
+        <Box bg="gray300" p="2" borderRadius="rounded-2xl" mb="2">
           <Box mb="3" mt="1">
             <Text variant="textXl" fontWeight={700}>
               Выберите категорию

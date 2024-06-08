@@ -18,7 +18,6 @@ export const ErrorList: React.FC<ErrorListProps> = ({ errors }) => {
           bg="red500"
           borderColor="red600"
           borderRadius="rounded-2xl"
-          mt="4"
           p="2"
         >
           {Object.keys(errors).map((key) => (

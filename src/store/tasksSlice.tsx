@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosManager from "../axios/AxiosClient";
-import { ITask } from "./types";
+import { ITask, ITaskRequest } from "./types";
 
 interface tasksState {
   tasks: ITask[];
@@ -33,6 +33,23 @@ export const getShowTasksForCategory = createAsyncThunk<
     }
   }
 );
+
+export const AddTask = createAsyncThunk<
+  ITask,
+  ITaskRequest,
+  { rejectValue: any }
+>("tasks/AddTask", async function (task, { rejectWithValue }) {
+  try {
+    const response = await axiosManager.post("/tasks", task);
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.status === 422) {
+      return rejectWithValue(error.response.data);
+    } else {
+      return rejectWithValue(error.message);
+    }
+  }
+});
 
 // export const AddCategories = createAsyncThunk<
 //   ICategory,
@@ -109,6 +126,26 @@ const tasksSlice = createSlice({
         state.loading = false;
         if (action.payload) {
           state.error = action.payload;
+        }
+
+        console.log(action.payload);
+      })
+
+      .addCase(AddTask.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(AddTask.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.tasks = action.payload;
+        state.error = null;
+
+        console.log(state.tasks);
+      })
+      .addCase(AddTask.rejected, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.error = action.payload.errors || action.payload;
         }
 
         console.log(action.payload);
