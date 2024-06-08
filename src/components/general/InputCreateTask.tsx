@@ -173,7 +173,7 @@ const InputCreateTask: React.FC<InputProps> = ({
               onBlur={() => setIsFocused(false)}
             />
           </Box>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={createTask}
             activeOpacity={0.7}
             style={{
@@ -189,7 +189,7 @@ const InputCreateTask: React.FC<InputProps> = ({
             <Text variant="textBase" color="white" fontWeight={500}>
               Создать
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </Box>
         <Box
           p="2"

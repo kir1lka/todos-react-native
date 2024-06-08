@@ -151,9 +151,9 @@ const CategoryScreen: React.FC = () => {
             )}
           </>
         )}
-        {/* <Box mb="2" mt="2">
+        <Box mb="2" mt="2">
           <Button label="Создать задачу" onPress={() => console.log()} />
-        </Box> */}
+        </Box>
         {/* </ScrollView> */}
       </Box>
     </SafeAreaWrapper>
