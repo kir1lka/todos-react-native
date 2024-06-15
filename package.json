@@ -19,7 +19,7 @@
     "@shopify/restyle": "^2.4.4",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
-    "expo": "~51.0.11",
+    "expo": "~51.0.14",
     "expo-linear-gradient": "^13.0.2",
     "expo-status-bar": "~1.12.1",
     "nanoid": "^5.0.7",

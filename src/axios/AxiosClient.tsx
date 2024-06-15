@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosManager = axios.create({
-  baseURL: `https://32cb-95-71-23-30.ngrok-free.app/api`,
+  baseURL: `https://a364-95-167-183-150.ngrok-free.app/api`,
 });
 
 let accessToken = "";

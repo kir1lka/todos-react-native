@@ -92,7 +92,7 @@ const SignupScreen: React.FC = () => {
             <Text variant="text2Xl" fontWeight={700}>
               Добро пожаловать!
             </Text>
-            <Text variant="text2Xl" fontWeight={700}>
+            <Text variant="text2Xl" fontWeight={700} mb="3.5">
               Здесь все начинается
             </Text>
 
